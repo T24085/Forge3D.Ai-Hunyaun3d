@@ -1,10 +1,23 @@
 # Forge3D.Ai
 
-![Forge3D.Ai Icon](assets/forge3d-icon.png)
+<p align="center">
+  <img src="assets/forge3d-icon.png" alt="Forge3D.Ai icon" width="220" />
+</p>
 
-Forge3D.Ai is a local Windows launcher for running `Hunyuan3D-2` on your own machine without paying per-generation credits. It wraps the upstream Hunyuan API with a custom control panel, local queue management, model preview, run history, and a packaging path for sharing the app with other Windows users.
+<p align="center">
+  Local Windows launcher for Hunyuan3D with preview, history, queue management, packaging, and zero per-credit fees.
+</p>
 
-## Preview
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Windows-0f172a?style=for-the-badge" alt="Windows" />
+  <img src="https://img.shields.io/badge/backend-FastAPI-111827?style=for-the-badge" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/model-Hunyuan3D-052e16?style=for-the-badge" alt="Hunyuan3D" />
+  <img src="https://img.shields.io/badge/package-Inno%20Setup-1f2937?style=for-the-badge" alt="Inno Setup" />
+</p>
+
+Forge3D.Ai is a local control panel for running `Hunyuan3D-2` on your own Windows machine. It wraps the upstream Hunyuan API with a custom UI for image-to-3D generation, previewing, comparing, queuing, and packaging into a shareable Windows app.
+
+## Gallery
 
 ![Forge3D.Ai Brand](Forge3D.Ai.png)
 
@@ -12,36 +25,51 @@ Forge3D.Ai is a local Windows launcher for running `Hunyuan3D-2` on your own mac
 
 ![Forge3D.Ai Launcher Screenshot 2](Screenshot%202026-04-01%20180528.png)
 
-## What it does
+## Why This Exists
 
-- Checks local machine readiness
-- Bootstraps and manages the upstream `Hunyuan3D-2` repo locally
-- Starts and stops the upstream Hunyuan API server
-- Queues image-to-3D jobs against the local API
-- Saves generated `.glb` files into local workspaces
-- Shows in-browser 3D preview, compare view, and generation history
-- Tracks CPU, RAM, GPU, VRAM, and temperature
-- Supports multiple visual themes in the launcher UI
-- Packages into a Windows-shareable app folder with icon and installer script
+Most hosted 3D generators charge per generation. Forge3D.Ai is built for running the pipeline locally instead:
 
-## Current design
+- your own GPU
+- your own model downloads
+- your own launcher UI
+- no recurring generation credit costs
 
-- `app.py`: FastAPI launcher backend and static file host
-- `static/`: setup and generation UI
-- `scripts/setup_hunyuan.ps1`: Windows bootstrap for the upstream Hunyuan environment
-- `scripts/build_windows_release.ps1`: PyInstaller build script
-- `packaging/Forge3DAi.iss`: Inno Setup installer script
-- `assets/`: Forge3D.Ai icon assets
+## Features
 
-## Recommended local path for this machine
+- Local launcher for `Hunyuan3D-2` on Windows
+- Start/stop controls for the upstream Hunyuan API
+- Image-to-3D job queue with active, pending, and recent states
+- In-browser `GLB` preview
+- History gallery with rerun, notes, compare, and downloads
+- Workspace folders per run with source image, notes, and exported model
+- Resource viewer for CPU, RAM, GPU, VRAM, and temperature
+- Theme switching in the UI
+- Windows packaging with `PyInstaller` and `Inno Setup`
 
-This machine has an `RTX 4060 8 GB`, so start with:
+## Recommended Hardware
 
-- `Hunyuan3D-2mini`
-- shape generation first
-- texture generation only after the base pipeline is stable
+Recommended starting point for this project:
 
-## Run
+- `RTX 4060 8 GB` or better for `Hunyuan3D-2mini`
+- `32 GB RAM` is comfortable
+- NVIDIA GPU required for the intended workflow
+
+Practical guidance:
+
+- shape generation: good fit for `8 GB VRAM`
+- texture generation: possible, but much more memory-sensitive
+- safest model for lower-VRAM cards: `Hunyuan3D-2mini`
+
+## Project Layout
+
+- `app.py`: FastAPI backend, queue orchestration, local launcher API
+- `static/`: launcher UI
+- `scripts/setup_hunyuan.ps1`: clone/bootstrap upstream Hunyuan repo and environment
+- `scripts/build_windows_release.ps1`: build portable app and installer
+- `packaging/Forge3DAi.iss`: Inno Setup installer definition
+- `assets/`: icon and branding assets
+
+## Quick Start
 
 1. Install launcher dependencies:
 
@@ -49,7 +77,7 @@ This machine has an `RTX 4060 8 GB`, so start with:
 python -m pip install -r requirements.txt
 ```
 
-2. Bootstrap upstream Hunyuan using Python 3.11 if available:
+2. Bootstrap upstream Hunyuan:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\setup_hunyuan.ps1
@@ -61,48 +89,55 @@ powershell -ExecutionPolicy Bypass -File .\scripts\setup_hunyuan.ps1
 python -m uvicorn app:app --host 127.0.0.1 --port 7861
 ```
 
-4. Open `http://127.0.0.1:7861`
+4. Open:
 
-## One-click start
+```text
+http://127.0.0.1:7861
+```
 
-After the upstream bootstrap has completed, you can start both the Hunyuan API and the launcher UI with:
+## One-Click Launch
+
+After upstream setup is complete:
 
 ```bat
 start_hunyuan_launcher.bat
 ```
 
-For first-time setup and launch in one step, use:
+For first-time setup plus launch:
 
 ```bat
 setup_and_start_hunyuan.bat
 ```
 
-## Build a Windows app
+## Build a Windows App
 
-You can package the launcher as a Windows distributable folder and optional installer:
+Build the portable app folder and installer:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\build_windows_release.ps1
 ```
 
-That build:
+Outputs:
 
-- creates `dist\Forge3DAi\Forge3DAi.exe`
-- bundles the web UI into the app
-- copies `scripts\setup_hunyuan.ps1` for first-run Hunyuan setup
-- compiles `dist\Forge3DAi-Setup.exe` too if Inno Setup 6 is installed
+- portable app: `dist\Forge3DAi\Forge3DAi.exe`
+- installer: `dist\Forge3DAi-Setup.exe`
 
-Notes for sharing:
+## Sharing With Other People
 
-- share the installer or the entire `dist\Forge3DAi\` folder
-- friends still need a compatible NVIDIA GPU and first-run model downloads
-- the Hunyuan community license still applies
+You can share either:
+
+- `dist\Forge3DAi-Setup.exe`
+- the full `dist\Forge3DAi\` folder
+
+What your friends still need:
+
+- a compatible NVIDIA GPU
+- internet on first run for model downloads
+- enough VRAM for the model/profile they choose
 
 ## Notes
 
-- This project is designed for local/self-hosted use on Windows.
-- `Hunyuan3D-2mini` is the safest starting point for `8 GB VRAM` GPUs.
-- Texture generation is heavier and may be unstable on lower-VRAM cards.
-- The upstream Tencent license is not a standard permissive OSS license. Read it before commercial use or redistribution.
+- This project is for local/self-hosted Windows use.
+- The upstream Tencent Hunyuan license is not a standard permissive OSS license. Read it before redistribution or commercial use.
 - The bootstrap script installs CUDA-enabled PyTorch from the official PyTorch wheel index.
-- If Python 3.11 is not installed, adjust `-PythonSelector` in the bootstrap script invocation.
+- If Python `3.11` is available, it is the safer path for ML compatibility than `3.12`.
