@@ -4,6 +4,14 @@
 
 Forge3D.Ai is a local Windows launcher for running `Hunyuan3D-2` on your own machine without paying per-generation credits. It wraps the upstream Hunyuan API with a custom control panel, local queue management, model preview, run history, and a packaging path for sharing the app with other Windows users.
 
+## Preview
+
+![Forge3D.Ai Brand](Forge3D.Ai.png)
+
+![Forge3D.Ai Launcher Screenshot](Screenshot%202026-04-01%20180522.png)
+
+![Forge3D.Ai Launcher Screenshot 2](Screenshot%202026-04-01%20180528.png)
+
 ## What it does
 
 - Checks local machine readiness
