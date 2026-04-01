@@ -17,8 +17,12 @@ Write-Host "Project root: $root"
 Write-Host "Installing build dependencies ..."
 python -m pip install --upgrade pyinstaller
 
+if (Test-Path $buildDir) {
+  Remove-Item -Recurse -Force $buildDir -ErrorAction SilentlyContinue
+}
+
 if (Test-Path $releaseDir) {
-  Remove-Item -Recurse -Force $releaseDir
+  Remove-Item -Recurse -Force $releaseDir -ErrorAction SilentlyContinue
 }
 
 Write-Host "Building $AppName ..."
@@ -58,8 +62,14 @@ Set-Content -Path (Join-Path $releaseDir "PORTABLE.txt") -Value $portableNotes -
 
 $isccCandidates = @(
   "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe",
-  "${env:ProgramFiles}\Inno Setup 6\ISCC.exe"
+  "${env:ProgramFiles}\Inno Setup 6\ISCC.exe",
+  "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe"
 )
+
+$whereIscc = (Get-Command ISCC.exe -ErrorAction SilentlyContinue).Source
+if ($whereIscc) {
+  $isccCandidates += $whereIscc
+}
 
 $iscc = $isccCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
 if ($iscc -and (Test-Path $innoScript)) {
