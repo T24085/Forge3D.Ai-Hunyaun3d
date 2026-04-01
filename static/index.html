@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forge3D.Ai</title>
+    <link rel="icon" type="image/png" href="/forge3d-icon.png" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  </head>
+  <body data-theme="green">
+    <div class="matrix-bg" aria-hidden="true">
+      <span class="matrix-stream matrix-stream-1">0<br>1<br>A<br>7<br>X<br>3<br>F<br>D<br>0<br>1<br>Z<br>9<br>A<br>F<br>3<br>D</span>
+      <span class="matrix-stream matrix-stream-2">7<br>F<br>1<br>0<br>Z<br>A<br>9<br>1<br>X<br>D<br>3<br>A<br>0<br>F<br>7<br>1</span>
+      <span class="matrix-stream matrix-stream-3">3<br>D<br>X<br>A<br>1<br>0<br>F<br>7<br>Z<br>1<br>0<br>A<br>3<br>F<br>D<br>9</span>
+      <span class="matrix-stream matrix-stream-4">9<br>0<br>A<br>Z<br>X<br>3<br>1<br>D<br>F<br>7<br>1<br>A<br>Z<br>X<br>0<br>3</span>
+      <span class="matrix-stream matrix-stream-5">F<br>A<br>3<br>7<br>D<br>1<br>0<br>X<br>9<br>A<br>F<br>3<br>1<br>D<br>7<br>X</span>
+      <span class="matrix-stream matrix-stream-6">1<br>Z<br>0<br>A<br>F<br>D<br>9<br>3<br>7<br>1<br>X<br>A<br>0<br>F<br>3<br>D</span>
+      <span class="matrix-stream matrix-stream-7">7<br>D<br>X<br>A<br>1<br>0<br>F<br>3<br>A<br>9<br>1<br>D<br>0<br>X<br>7<br>F</span>
+      <span class="matrix-stream matrix-stream-8">A<br>F<br>9<br>3<br>1<br>0<br>Z<br>X<br>7<br>D<br>1<br>A<br>F<br>0<br>3<br>9</span>
+      <span class="matrix-stream matrix-stream-9">3<br>1<br>D<br>F<br>Z<br>A<br>7<br>0<br>1<br>X<br>A<br>F<br>9<br>3<br>D<br>0</span>
+      <span class="matrix-stream matrix-stream-10">0<br>X<br>A<br>F<br>3<br>1<br>9<br>D<br>7<br>Z<br>0<br>A<br>F<br>1<br>3<br>X</span>
+      <span class="matrix-stream matrix-stream-11">A<br>7<br>D<br>0<br>1<br>3<br>X<br>F<br>9<br>A<br>1<br>D<br>7<br>0<br>X<br>3</span>
+      <span class="matrix-stream matrix-stream-12">F<br>0<br>9<br>A<br>3<br>1<br>D<br>7<br>X<br>A<br>F<br>0<br>1<br>9<br>D<br>Z</span>
+      <span class="matrix-stream matrix-stream-13">1<br>F<br>0<br>7<br>D<br>A<br>3<br>X<br>9<br>1<br>F<br>D<br>0<br>Z<br>7<br>A</span>
+      <span class="matrix-stream matrix-stream-14">Z<br>3<br>1<br>F<br>A<br>0<br>D<br>7<br>X<br>9<br>A<br>1<br>3<br>F<br>D<br>0</span>
+      <span class="matrix-stream matrix-stream-15">9<br>A<br>F<br>0<br>1<br>D<br>7<br>X<br>3<br>Z<br>1<br>A<br>F<br>9<br>0<br>D</span>
+      <span class="matrix-stream matrix-stream-16">D<br>7<br>1<br>X<br>A<br>F<br>0<br>3<br>9<br>Z<br>D<br>1<br>A<br>7<br>F<br>0</span>
+      <span class="matrix-stream matrix-stream-17">3<br>0<br>A<br>F<br>7<br>1<br>D<br>X<br>9<br>A<br>3<br>F<br>0<br>Z<br>D<br>1</span>
+      <span class="matrix-stream matrix-stream-18">F<br>D<br>9<br>1<br>A<br>0<br>X<br>3<br>7<br>F<br>D<br>1<br>0<br>A<br>Z<br>3</span>
+      <span class="matrix-stream matrix-stream-19">7<br>0<br>X<br>A<br>F<br>3<br>D<br>1<br>9<br>Z<br>7<br>A<br>0<br>F<br>3<br>D</span>
+      <span class="matrix-stream matrix-stream-20">A<br>1<br>7<br>D<br>0<br>F<br>X<br>3<br>9<br>A<br>1<br>Z<br>D<br>7<br>F<br>0</span>
+      <span class="matrix-stream matrix-stream-21">0<br>F<br>3<br>9<br>A<br>1<br>D<br>7<br>X<br>Z<br>0<br>F<br>3<br>A<br>1<br>D</span>
+      <span class="matrix-stream matrix-stream-22">X<br>7<br>D<br>1<br>A<br>0<br>F<br>3<br>9<br>X<br>7<br>A<br>D<br>1<br>0<br>F</span>
+      <span class="matrix-stream matrix-stream-23">D<br>0<br>1<br>A<br>F<br>7<br>3<br>X<br>9<br>D<br>0<br>Z<br>A<br>1<br>F<br>7</span>
+      <span class="matrix-stream matrix-stream-24">F<br>3<br>D<br>7<br>1<br>A<br>0<br>X<br>9<br>F<br>3<br>D<br>Z<br>1<br>A<br>0</span>
+    </div>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Issue 01 / Local 3D Generation</p>
+        <h1 class="brand-title" aria-label="Forge3D.Ai">
+          <span class="brand-word brand-main" data-text="Forge3D">Forge3D</span>
+          <span class="brand-word brand-ai" data-text=".Ai">.Ai</span>
+        </h1>
+        <p class="lede">
+          A local control panel for running Hunyuan3D on your own Windows machine,
+          tuned for an RTX 4060 8 GB workflow.
+        </p>
+        <div class="theme-switcher" role="group" aria-label="Website color scheme">
+          <span class="theme-label">Theme</span>
+          <button type="button" class="ghost theme-option is-active" data-theme="green">Black + Green</button>
+          <button type="button" class="ghost theme-option" data-theme="purple">Purple</button>
+          <button type="button" class="ghost theme-option" data-theme="red">Red</button>
+        </div>
+      </section>
+
+      <section class="panel grid two">
+        <div>
+          <div class="section-head">
+            <h2>System</h2>
+            <button id="exit-btn" class="ghost danger">Exit Forge3D.Ai</button>
+          </div>
+          <div id="system-summary" class="stack small"></div>
+        </div>
+        <div>
+          <h2>Hunyuan Status</h2>
+          <div id="hunyuan-summary" class="stack small"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Resources</h2>
+        <div id="resource-summary" class="grid three"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Generate</h2>
+        <form id="generate-form" class="stack">
+          <label class="field">
+            <span>Reference image</span>
+            <input id="image-input" type="file" accept="image/*" required />
+          </label>
+          <div class="grid three">
+            <label class="field">
+              <span>Seed</span>
+              <input id="seed-input" type="number" value="1234" />
+            </label>
+            <label class="field">
+              <span>Steps</span>
+              <input id="steps-input" type="number" value="5" min="1" max="50" />
+            </label>
+            <label class="field">
+              <span>Guidance</span>
+              <input id="guidance-input" type="number" value="5" min="1" max="10" step="0.5" />
+            </label>
+          </div>
+          <label class="toggle">
+            <input id="texture-input" type="checkbox" />
+            <span>Try texture generation</span>
+          </label>
+          <label class="field">
+            <span>Run notes</span>
+            <textarea id="notes-input" rows="3" placeholder="Add notes for this run, prompt ideas, what changed, or what to try next."></textarea>
+          </label>
+          <div class="actions">
+            <button type="submit">Queue Generation</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Job</h2>
+        <div id="job-status" class="stack small muted">No job queued yet.</div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Queue</h2>
+          <span class="muted">Active, pending, and recent jobs</span>
+        </div>
+        <div id="queue-board" class="queue-board">
+          <div class="muted">No queue activity yet.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Preview</h2>
+          <div class="preview-actions">
+            <div class="preview-presets" role="group" aria-label="Preview style">
+              <button id="preset-studio" type="button" class="ghost preview-preset is-active">Studio</button>
+              <button id="preset-twilight" type="button" class="ghost preview-preset">Twilight</button>
+              <button id="preset-light" type="button" class="ghost preview-preset">Light</button>
+            </div>
+            <div class="tint-controls">
+              <label class="tint-label" for="tint-picker">Model tint</label>
+              <input id="tint-picker" type="color" value="#a8c5ff" />
+              <div class="tint-swatches" role="group" aria-label="Tint presets">
+                <button type="button" class="ghost tint-swatch is-active" data-color="#a8c5ff" title="Cool blue"></button>
+                <button type="button" class="ghost tint-swatch" data-color="#d8c39a" title="Sand"></button>
+                <button type="button" class="ghost tint-swatch" data-color="#c7a6ff" title="Lavender"></button>
+                <button type="button" class="ghost tint-swatch" data-color="#9fe3d7" title="Mint"></button>
+                <button type="button" class="ghost tint-swatch" data-color="#f1f1f1" title="Soft white"></button>
+              </div>
+            </div>
+            <a id="preview-download" href="" target="_blank" rel="noreferrer" class="preview-link hidden">Download Current GLB</a>
+            <button id="drive-upload" type="button" class="ghost hidden">Upload to Google Drive</button>
+          </div>
+        </div>
+        <div id="preview-empty" class="muted">Completed models will appear here.</div>
+        <model-viewer
+          id="model-preview"
+          class="model-preview hidden"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="1.1"
+          environment-image="neutral"
+          interaction-prompt="auto"
+          camera-orbit="25deg 70deg auto"
+        ></model-viewer>
+      </section>
+
+      <section class="panel">
+        <h2>Compare</h2>
+        <div class="compare-grid">
+          <div class="compare-slot">
+            <div id="compare-left-meta" class="muted">Choose a run for the left side.</div>
+            <model-viewer
+              id="compare-left-viewer"
+              class="model-preview compare-viewer preview-studio"
+              camera-controls
+              interaction-prompt="auto"
+              exposure="1.65"
+              shadow-intensity="0.55"
+              camera-orbit="35deg 72deg auto"
+              environment-image="neutral"
+            ></model-viewer>
+          </div>
+          <div class="compare-slot">
+            <div id="compare-right-meta" class="muted">Choose a run for the right side.</div>
+            <model-viewer
+              id="compare-right-viewer"
+              class="model-preview compare-viewer preview-studio"
+              camera-controls
+              interaction-prompt="auto"
+              exposure="1.65"
+              shadow-intensity="0.55"
+              camera-orbit="35deg 72deg auto"
+              environment-image="neutral"
+            ></model-viewer>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>History</h2>
+          <span class="muted">Recent runs with preview, compare, and rerun actions</span>
+        </div>
+        <div id="history-list" class="history-grid">
+          <div class="muted">No generations yet.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <button id="bootstrap-toggle" type="button" class="section-toggle ghost" aria-expanded="false">Show Hunyuan Painter</button>
+          <button id="refresh-btn" class="ghost">Refresh</button>
+        </div>
+        <div id="bootstrap-panel" class="hidden stack">
+          <p class="muted">
+            First run the setup script to create the upstream virtual environment and install model dependencies.
+          </p>
+          <pre id="bootstrap-command" class="code"></pre>
+          <label class="toggle">
+            <input id="backend-texture-toggle" type="checkbox" />
+            <span>Enable Hunyuan Paint texture backend</span>
+          </label>
+          <p class="muted note">
+            Experimental on RTX 4060 8 GB. Restart the Hunyuan API after changing this setting.
+          </p>
+          <div class="actions">
+            <button id="start-btn">Start Hunyuan API</button>
+            <div class="inline-actions">
+              <button id="stop-btn" class="ghost">Stop API</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <button id="logs-toggle" type="button" class="section-toggle ghost" aria-expanded="false">Show Logs</button>
+        <div id="logs-panel" class="hidden">
+          <pre id="logs" class="code logs"></pre>
+        </div>
+      </section>
+
+      <footer class="site-footer">Powered by Hunyuan Launcher</footer>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
