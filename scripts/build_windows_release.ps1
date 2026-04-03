@@ -26,7 +26,7 @@ if (Test-Path $releaseDir) {
 }
 
 Write-Host "Building $AppName ..."
-pyinstaller `
+python -m PyInstaller `
   --noconfirm `
   --clean `
   --onedir `
