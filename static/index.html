@@ -75,6 +75,7 @@
 
       <section class="panel">
         <h2>Generate</h2>
+        <div id="setup-callout" class="setup-callout hidden"></div>
         <form id="generate-form" class="stack">
           <label class="field">
             <span>Reference image</span>
@@ -103,7 +104,7 @@
             <textarea id="notes-input" rows="3" placeholder="Add notes for this run, prompt ideas, what changed, or what to try next."></textarea>
           </label>
           <div class="actions">
-            <button type="submit">Queue Generation</button>
+            <button id="generate-btn" type="submit">Queue Generation</button>
           </div>
         </form>
       </section>
@@ -205,7 +206,7 @@
 
       <section class="panel">
         <div class="section-head">
-          <button id="bootstrap-toggle" type="button" class="section-toggle ghost" aria-expanded="false">Show Hunyuan Painter</button>
+          <button id="bootstrap-toggle" type="button" class="section-toggle ghost" aria-expanded="false">Show Setup</button>
           <button id="refresh-btn" class="ghost">Refresh</button>
         </div>
         <div id="bootstrap-panel" class="hidden stack">
@@ -213,6 +214,9 @@
             First run the setup script to create the upstream virtual environment and install model dependencies.
           </p>
           <pre id="bootstrap-command" class="code"></pre>
+          <div class="actions">
+            <button id="run-setup-btn" type="button">Run First-Time Setup</button>
+          </div>
           <label class="toggle">
             <input id="backend-texture-toggle" type="checkbox" />
             <span>Enable Hunyuan Paint texture backend</span>

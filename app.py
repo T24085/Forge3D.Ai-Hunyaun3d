@@ -350,6 +350,31 @@ def get_upstream_status() -> dict[str, Any]:
     return status
 
 
+def launch_bootstrap_setup() -> dict[str, Any]:
+    setup_script = SCRIPTS_DIR / "setup_hunyuan.ps1"
+    if not setup_script.exists():
+        raise HTTPException(status_code=404, detail="Setup script is missing from the packaged app.")
+
+    command = [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        (
+            "Start-Process powershell "
+            f"-WorkingDirectory '{APP_HOME}' "
+            f"-ArgumentList '-NoExit','-ExecutionPolicy','Bypass','-File','{setup_script}'"
+        ),
+    ]
+    subprocess.Popen(command, cwd=APP_HOME)
+    return {
+        "started": True,
+        "scriptPath": str(setup_script),
+        "message": "Opened first-time setup in a separate PowerShell window.",
+    }
+
+
 def start_upstream_process() -> dict[str, Any]:
     config = load_config()
     repo_path = resolve_path(config["repoPath"])
@@ -733,17 +758,38 @@ def cancel_job(job_id: str) -> dict[str, Any]:
 
 @app.get("/api/bootstrap")
 def bootstrap_instructions() -> dict[str, Any]:
+    status = get_upstream_status()
     repo_path = resolve_path(load_config()["repoPath"])
     script_path = SCRIPTS_DIR / "setup_hunyuan.ps1"
+    first_run_path = APP_HOME / "setup_and_start_hunyuan.bat"
+    if status["reachable"]:
+        setup_state = "ready"
+        setup_message = "Hunyuan API is reachable. You can generate now."
+    elif status["repoPresent"] and status["venvPresent"]:
+        setup_state = "start-required"
+        setup_message = "Setup files are present. Start the Hunyuan API before generating."
+    else:
+        setup_state = "setup-required"
+        setup_message = "This PC still needs first-time Hunyuan setup. The launcher alone is not enough."
     return {
         "repoPath": str(repo_path),
         "scriptPath": str(script_path),
+        "firstRunPath": str(first_run_path),
+        "scriptPresent": script_path.exists(),
+        "firstRunPresent": first_run_path.exists(),
+        "setupState": setup_state,
+        "setupMessage": setup_message,
         "notes": [
             "Use Python 3.11 if available. Python 3.10 is also a safer choice than 3.12 for ML packages.",
             "Your 8 GB GPU is best matched with Hunyuan3D-2mini for shape generation.",
             "Texture generation is available but likely memory-constrained on an RTX 4060 8 GB.",
         ],
     }
+
+
+@app.post("/api/bootstrap/run")
+def run_bootstrap() -> dict[str, Any]:
+    return launch_bootstrap_setup()
 
 
 @app.post("/api/generate")

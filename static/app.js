@@ -18,6 +18,9 @@ const logsToggle = document.getElementById("logs-toggle");
 const logsPanel = document.getElementById("logs-panel");
 const bootstrapToggle = document.getElementById("bootstrap-toggle");
 const bootstrapPanel = document.getElementById("bootstrap-panel");
+const setupCallout = document.getElementById("setup-callout");
+const generateButton = document.getElementById("generate-btn");
+const runSetupButton = document.getElementById("run-setup-btn");
 const historyList = document.getElementById("history-list");
 const compareLeftViewer = document.getElementById("compare-left-viewer");
 const compareRightViewer = document.getElementById("compare-right-viewer");
@@ -34,6 +37,42 @@ let currentConfig = null;
 let historyEntries = [];
 let compareSelection = { left: null, right: null };
 let currentTheme = "green";
+
+function setBootstrapPanelOpen(open) {
+  bootstrapPanel.classList.toggle("hidden", !open);
+  bootstrapToggle.setAttribute("aria-expanded", String(open));
+  bootstrapToggle.textContent = open ? "Hide Setup" : "Show Setup";
+}
+
+function renderSetupState(hunyuan, bootstrap) {
+  const ready = Boolean(hunyuan && hunyuan.reachable);
+  generateButton.disabled = !ready;
+
+  if (ready) {
+    setupCallout.classList.add("hidden");
+    setupCallout.textContent = "";
+    if (!bootstrapPanel.classList.contains("hidden")) {
+      setBootstrapPanelOpen(false);
+    }
+    return;
+  }
+
+  const missingPieces = [];
+  if (!hunyuan.repoPresent) {
+    missingPieces.push("upstream repo missing");
+  }
+  if (!hunyuan.venvPresent) {
+    missingPieces.push("virtual environment missing");
+  }
+  if (!hunyuan.reachable && hunyuan.repoPresent && hunyuan.venvPresent) {
+    missingPieces.push("API not started");
+  }
+
+  const detail = missingPieces.length ? ` Current state: ${missingPieces.join(", ")}.` : "";
+  setupCallout.textContent = `${bootstrap.setupMessage}${detail} Use Setup below before trying to generate.`;
+  setupCallout.classList.remove("hidden");
+  setBootstrapPanelOpen(true);
+}
 
 const previewPresetConfig = {
   studio: {
@@ -268,9 +307,7 @@ logsToggle.addEventListener("click", () => {
 });
 
 bootstrapToggle.addEventListener("click", () => {
-  const isHidden = bootstrapPanel.classList.toggle("hidden");
-  bootstrapToggle.setAttribute("aria-expanded", String(!isHidden));
-  bootstrapToggle.textContent = isHidden ? "Show Hunyuan Painter" : "Hide Hunyuan Painter";
+  setBootstrapPanelOpen(bootstrapPanel.classList.contains("hidden"));
 });
 
 historyList.addEventListener("click", async (event) => {
@@ -475,9 +512,10 @@ async function refresh() {
 
   bootstrapCommand.textContent =
     `powershell -ExecutionPolicy Bypass -File "${bootstrap.scriptPath}"\n` +
-    `python -m uvicorn app:app --host 127.0.0.1 --port ${system.config.launcherPort}`;
+    `.\start_hunyuan_launcher.bat`;
 
   logsEl.textContent = logs.lines.join("\n");
+  renderSetupState(hunyuan, bootstrap);
   renderResourceCards(resources);
   historyEntries = history.items || [];
   renderHistory(historyEntries);
@@ -486,6 +524,15 @@ async function refresh() {
 }
 
 document.getElementById("refresh-btn").addEventListener("click", refresh);
+
+runSetupButton.addEventListener("click", async () => {
+  try {
+    const result = await api("/api/bootstrap/run", { method: "POST" });
+    jobStatus.textContent = `${result.message} When setup finishes, click Start Hunyuan API or Refresh.`;
+  } catch (error) {
+    jobStatus.textContent = error.message;
+  }
+});
 
 document.getElementById("start-btn").addEventListener("click", async () => {
   try {
